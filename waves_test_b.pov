@@ -1,16 +1,26 @@
-
-
-
-
 // I've found that the easiest way to view changes in real time
 // is to set up the POVRAY with +KFF360,
 // Then, change something on this .pov file and save while its still
 // rendering. The povray renderer doesnt care if the file is modified in the middle of rendering,
 // itll just use the new file. If you do this alot and make a movie of all the scenes, it looks weired.
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// 	No math here
 
 #version 3.5;
+#include "colors.inc"
+#include "textures.inc"
+#include "glass.inc"
+#include "metals.inc"
+#include "golds.inc"
+#include "stones.inc"
+#include "woods.inc"
+#include "shapes.inc"
+#include "shapes2.inc"
+#include "functions.inc"
+#include "math.inc"
+#include "transforms.inc"
+#include "basic-shapes.inc"
 #include "colors.inc"
 #include "waves.inc"
 #default { finish { ambient 0.07 }}
@@ -22,6 +32,7 @@ global_settings {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+//	No math here
 
 #declare M_Watx =
 material {
@@ -50,29 +61,36 @@ material {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+//	No math here
 
-#declare Siz=2+clock*2;									//How far away are you from the pool? Probably leave at 4
+#declare Siz=4;									//How far away are you from the pool? Probably leave at 4
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+// 	No math here
 
 #declare Height=0.1;									//How rippled are the waves? i.e. how high? Probably leave at 0.1-0.3
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+// 	No math here
 
 #declare MAX_WAVES = 10;								//Want less waves? Want more waves? Adjust accordingly, but no high numbers like 600
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+//	Theres some math here
 
 #declare fn_Water=
 function {
-  Waves(pi/2, 5.9, clock*50, 700) * 0.024 + 6.5		//Each value here changes the intensity of the wave. Change the clock for more waves
+  Waves(pi/2, 5.9, clock*500, 700) * 0.024 + 6.5			//Each value here changes the intensity of the wave. Change the clock for more waves
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-light_source { <1, 1, 1> 1 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+//	No math here
+
+light_source { <5, 5, 5> 5 }							// <x,y,z> above 1, last value is intensity
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// 	No math here
 
 camera {
   location  <1,  0, 0.1>								// standard xyz, z should stay at 0.1
@@ -86,6 +104,7 @@ camera {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+// 	No math here
 
 height_field {
   function 300, 300 { fn_Water(x, y, 0) }
@@ -100,6 +119,7 @@ height_field {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+// 	No math here
 
 difference {
   box { < -(Siz/2+0.2), -(Siz/2+0.2),-1>, <(Siz/2+0.2), (Siz/2+0.2),0.05> }
@@ -112,3 +132,12 @@ difference {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+// sample sphere
+sphere { <0,0,0>, 1.00 
+         texture {
+                   pigment{ color Red } // rgb< 1, 0.0, 0.0>}
+                   finish { phong 1 reflection {0.40 metallic 0.5}}
+                 }
+
+          scale<.05,.05,.05>  rotate<0,0,0>  translate<0,0,.25>  
+       }  // end of sphere ----------------------------------- 
